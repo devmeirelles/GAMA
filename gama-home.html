@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAMA — Prestação de Serviços e Locação de Máquinas Agrícolas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #173404;
+      --green-mid:    #3B6D11;
+      --green-base:   #639922;
+      --green-light:  #C0DD97;
+      --green-pale:   #EAF3DE;
+      --off-white:    #F7F5F0;
+      --white:        #FFFFFF;
+      --gray:         #888780;
+      --text:         #1a1a18;
+      --text-muted:   #5F5E5A;
+      --border:       rgba(0,0,0,0.08);
+      --radius:       10px;
+      --radius-lg:    16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 60px);
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--green-dark);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green-mid); }
+    .nav-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      background: var(--green-mid);
+      color: var(--green-pale);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dark); }
+    .nav-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-menu-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-pale);
+      padding: clamp(56px, 10vw, 100px) clamp(20px, 5vw, 60px) 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4.5vw, 54px);
+      color: var(--green-dark);
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--green-mid);
+      margin-bottom: 32px;
+      max-width: 460px;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      background: var(--green-mid);
+      color: var(--green-pale);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-ghost {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--green-dark);
+      border: 1.5px solid var(--green-base);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-ghost:hover { background: var(--green-pale); }
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 0;
+      align-self: end;
+    }
+    .hero-img-placeholder {
+      width: 100%;
+      height: 280px;
+      background: var(--green-light);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img-placeholder::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--green-pale);
+    }
+    .hero-img-icon {
+      font-family: 'DM Serif Display', serif;
+      font-size: 80px;
+      color: var(--green-mid);
+      opacity: 0.25;
+      line-height: 1;
+    }
+
+    /* ── METRICS ── */
+    .metrics {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .metrics-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .metric-item {
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .metric-item:last-child { border-right: none; }
+    .metric-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--green-mid);
+      margin-bottom: 2px;
+    }
+    .metric-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 60px);
+    }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--green-base);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      color: var(--green-dark);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .svc-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .svc-card:hover {
+      border-color: var(--green-light);
+      transform: translateY(-2px);
+    }
+    .svc-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      background: var(--green-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .svc-dot svg { width: 18px; height: 18px; }
+    .svc-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .svc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── DIFERENCIAIS ── */
+    .diff-bg { background: var(--green-dark); }
+    .diff-bg .section-eyebrow { color: var(--green-light); }
+    .diff-bg .section-title { color: var(--white); }
+    .diff-bg .section-sub { color: var(--green-light); opacity: 0.8; }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .diff-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .diff-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      color: var(--green-light);
+      margin-bottom: 6px;
+    }
+    .diff-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .diff-desc { font-size: 13px; color: var(--green-light); opacity: 0.75; line-height: 1.6; }
+
+    /* ── CLIENTES ── */
+    .clients-bg { background: var(--off-white); }
+    .clients-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .client-pill {
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--white);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .client-pill:hover { border-color: var(--green-base); color: var(--green-mid); }
+    .client-more {
+      font-size: 13px;
+      color: var(--green-mid);
+      font-weight: 500;
+      padding: 8px 4px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--green-mid);
+      padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 60px);
+      text-align: center;
+    }
+    .cta-section .section-inner { max-width: 600px; }
+    .cta-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 3.5vw, 42px);
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .cta-sub {
+      font-size: 15px;
+      color: var(--green-light);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-wa {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 26px;
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--green-dark);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.15s, background 0.2s;
+    }
+    .btn-wa:hover { background: var(--green-pale); transform: translateY(-1px); }
+    .btn-email {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 13px 26px;
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--green-pale);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s;
+    }
+    .btn-email:hover { border-color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px clamp(20px, 5vw, 60px);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-name {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-contacts { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-contacts a {
+      font-size: 13px;
+      color: var(--green-light);
+      text-decoration: none;
+    }
+    .footer-contacts a:hover { color: var(--white); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 200;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 26px; height: 26px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content { animation: fadeUp 0.6s ease both; }
+    .hero-visual  { animation: fadeUp 0.6s 0.15s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .metrics-inner { grid-template-columns: 1fr 1fr; }
+      .metric-item:nth-child(2) { border-right: none; }
+      .metric-item:nth-child(3) { border-right: 1px solid var(--border); }
+      .metric-item:nth-child(3),
+      .metric-item:nth-child(4) { border-top: 1px solid var(--border); }
+      .nav-links { display: none; }
+      .nav-menu-btn { display: block; }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">GAMA</a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5514997843601" class="nav-cta" target="_blank">Solicitar orçamento</a>
+  <button class="nav-menu-btn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-tag">25 anos de experiência no campo</span>
+      <h1>Soluções em máquinas agrícolas para quem produz de verdade</h1>
+      <p class="hero-sub">Prestação de serviços e locação de máquinas para colheita de café, preparo de solo e conservação de áreas verdes. Frota nova, equipe especializada, atendimento em 24h.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5514997843601" class="btn-primary" target="_blank">Solicitar orçamento</a>
+        <a href="#servicos" class="btn-ghost">Ver nossos serviços</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-placeholder">
+        <!-- Substitua por: <img src="foto-frota.jpg" alt="Frota GAMA" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"> -->
+        <span class="hero-img-icon">GAMA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="metrics-inner">
+    <div class="metric-item">
+      <p class="metric-num">25 anos</p>
+      <p class="metric-lbl">de experiência em colheitas</p>
+    </div>
+    <div class="metric-item">
+      <p class="metric-num">50+</p>
+      <p class="metric-lbl">clientes atendidos</p>
+    </div>
+    <div class="metric-item">
+      <p class="metric-num">24h</p>
+      <p class="metric-lbl">atendimento em campo</p>
+    </div>
+    <div class="metric-item">
+      <p class="metric-num">≤ 3 anos</p>
+      <p class="metric-lbl">idade média da frota</p>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIÇOS -->
+<section class="section" id="servicos" style="background: var(--white);">
+  <div class="section-inner">
+    <p class="section-eyebrow">Nossos serviços</p>
+    <h2 class="section-title">Do preparo do solo à colheita</h2>
+    <p class="section-sub">Máquinas e equipe especializada para cada etapa da sua lavoura.</p>
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="10" width="14" height="4" rx="1.5" fill="#3B6D11"/><rect x="5" y="7" width="8" height="3" rx="1" fill="#97C459"/><circle cx="4.5" cy="15" r="2" fill="#3B6D11"/><circle cx="13.5" cy="15" r="2" fill="#3B6D11"/></svg>
+        </div>
+        <p class="svc-name">Colheita de café</p>
+        <p class="svc-desc">Colhedeiras KTR e recolhedoras para colheita completa e eficiente.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="8" width="16" height="2.5" rx="1" fill="#3B6D11"/><rect x="3" y="4" width="2.5" height="4" rx="1" fill="#97C459"/><rect x="7.5" y="3" width="2.5" height="5" rx="1" fill="#97C459"/><rect x="12" y="5" width="2.5" height="3" rx="1" fill="#97C459"/></svg>
+        </div>
+        <p class="svc-name">Preparo de solo</p>
+        <p class="svc-desc">Grades aradoras, arados e subsoladores para manejo do solo.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="14" height="7" rx="2" fill="#97C459"/><rect x="6" y="3" width="6" height="4" rx="1" fill="#3B6D11"/><circle cx="4.5" cy="14" r="2" fill="#3B6D11"/><circle cx="13.5" cy="14" r="2" fill="#3B6D11"/></svg>
+        </div>
+        <p class="svc-name">Roçadeiras</p>
+        <p class="svc-desc">Para rodovias e áreas verdes, reforçadas e adaptadas.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="10" height="6" rx="1" fill="#97C459"/><rect x="12" y="9" width="4" height="4" rx="1" fill="#3B6D11"/><rect x="1" y="10" width="4" height="3" rx="1" fill="#3B6D11"/><circle cx="5" cy="14" r="2" fill="#3B6D11"/><circle cx="13" cy="14" r="2" fill="#3B6D11"/></svg>
+        </div>
+        <p class="svc-name">Locação de tratores</p>
+        <p class="svc-desc">Frota diversa com máximo 3 anos de uso.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="12" height="9" rx="1.5" fill="#97C459"/><rect x="6" y="6" width="6" height="5" rx="1" fill="#3B6D11"/><rect x="2" y="11" width="14" height="3" rx="1" fill="#3B6D11"/></svg>
+        </div>
+        <p class="svc-name">Terraplanagem</p>
+        <p class="svc-desc">Nivelamento e preparo de terrenos.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-dot">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="4" height="9" rx="1" fill="#97C459"/><rect x="3" y="9" width="12" height="4" rx="1" fill="#3B6D11"/><circle cx="6" cy="14" r="2" fill="#3B6D11"/><circle cx="12" cy="14" r="2" fill="#3B6D11"/></svg>
+        </div>
+        <p class="svc-name">Máquinas de poda</p>
+        <p class="svc-desc">Poda e manutenção de lavouras cafeeiras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="section diff-bg" id="diferenciais">
+  <div class="section-inner">
+    <p class="section-eyebrow">Por que escolher a GAMA</p>
+    <h2 class="section-title">Diferenciais que fazem diferença</h2>
+    <p class="section-sub">Mais de duas décadas servindo o produtor rural com eficiência, tecnologia e compromisso.</p>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <p class="diff-num">25 anos</p>
+        <p class="diff-title">Especialistas em café</p>
+        <p class="diff-desc">Reduzimos seu custo por saca e agilizamos a colheita da sua lavoura com máquinas e equipe treinada.</p>
+      </div>
+      <div class="diff-card">
+        <p class="diff-num">Frota nova</p>
+        <p class="diff-title">Máx. 3 anos de uso</p>
+        <p class="diff-desc">Menos quebra, menos parada e menos custo de oficina. Você produz sem interrupção.</p>
+      </div>
+      <div class="diff-card">
+        <p class="diff-num">24h</p>
+        <p class="diff-title">Atendimento em campo</p>
+        <p class="diff-desc">Equipe especializada pronta para qualquer ocorrência, sem deixar sua safra parar.</p>
+      </div>
+      <div class="diff-card">
+        <p class="diff-num">50+</p>
+        <p class="diff-title">Clientes atendidos</p>
+        <p class="diff-desc">De produtores rurais a grandes construtoras e prefeituras. Referência comprovada na região.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section class="section clients-bg" id="clientes">
+  <div class="section-inner">
+    <p class="section-eyebrow">Quem confia na GAMA</p>
+    <h2 class="section-title">Clientes que já colheram resultados</h2>
+    <p class="section-sub">Empresas e instituições que escolheram a GAMA para suas operações.</p>
+    <div class="clients-row">
+      <span class="client-pill">ViaRondon</span>
+      <span class="client-pill">NF Motta</span>
+      <span class="client-pill">Cafés do Brasil</span>
+      <span class="client-pill">Cetenco Engenharia S.A.</span>
+      <span class="client-pill">Prefeitura de Garça/SP</span>
+      <span class="client-pill">Futuro Florestal</span>
+      <span class="client-more">+ 44 outros clientes</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA CONTATO -->
+<section class="cta-section" id="contato">
+  <div class="section-inner">
+    <h2 class="cta-title">Pronto para otimizar sua operação?</h2>
+    <p class="cta-sub">Fale com a equipe GAMA e receba um orçamento sem compromisso. Atendemos toda a região em até 24 horas.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5514997843601" class="btn-wa" target="_blank">Chamar Marco no WhatsApp</a>
+      <a href="mailto:marcocirillo75@gmail.com" class="btn-email">Enviar e-mail</a>
+    </div>
+    <p style="margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.5);">
+      (14) 99784-3601 Marco &nbsp;·&nbsp; (14) 99786-6360 Gustavo
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-name">© 2025 GAMA Prestador de Serviços e Locação de Máquinas Ltda</span>
+    <div class="footer-contacts">
+      <a href="https://wa.me/5514997843601" target="_blank">(14) 99784-3601</a>
+      <a href="https://wa.me/5514997866360" target="_blank">(14) 99786-6360</a>
+      <a href="mailto:marcocirillo75@gmail.com">marcocirillo75@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5514997843601" class="wa-float" target="_blank" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+</body>
+</html>
